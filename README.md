@@ -1,5 +1,5 @@
 # kbilling-types
-The only required dependency for your [KillingBilling](https://www.killingbilling.com/) projects. Read [Getting Started](https://www.killingbilling.com/docs/001.Getting-Started) for a quick start.
+The only required dependency for your [KillingBilling](https://www.killingbilling.com/) projects. Read [Getting Started](https://github.com/KillingBilling/kbilling-plans) for a quick start.
 
 # Billing Plan structure
 
