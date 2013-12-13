@@ -9,14 +9,16 @@ object BillingPlan {
 trait BillingPlan {
   val accounts: Map[String, Account]
   val notifications: Set[Notification]
-  final lazy val aggregates = (accounts.values collect {case a: ServiceAccount => a} flatMap {_.aggregates}).toMap
+  final lazy val aggregates = (accounts.values flatMap {_.aggregates}).toMap
 }
 
-sealed trait Account
+trait Account {
+  def aggregates: Map[String, Aggregate]
+}
 
 case class ServiceAccount(aggregates: Map[String, Aggregate]) extends Account
 
-case class PaymentAccount(cost: Vars => BigDecimal) extends Account
+case class PaymentAccount(cost: Vars => BigDecimal, aggregates: Map[String, Aggregate] = Map()) extends Account
 
 case class Aggregate(
   aggr: (BigDecimal, BigDecimal) => BigDecimal = {(a, b) => a + b},
