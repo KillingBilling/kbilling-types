@@ -1,9 +1,12 @@
 package kbilling.model
 
-import BillingPlan.Vars
+import BillingPlan._
 
 object BillingPlan {
   type Vars = Map[String, BigDecimal]
+  @inline def -!-(acck: String, aggk: String) = s"$acck.$aggk"
+  val _COST = "_COST"
+  @inline def COST(acck: String) = -!-(acck, _COST)
 }
 
 trait BillingPlan {
@@ -12,9 +15,9 @@ trait BillingPlan {
   val notifications: Set[Notification]
 
   final lazy val aggregates: Map[String, Aggregate] = (for {
-    (accKey, acc) <- accounts
-    (aggrKey, aggr) <- acc.aggregates
-  } yield (s"$accKey.$aggrKey", aggr)).toMap
+    (acck, account) <- accounts
+    (aggk, aggregate) <- account.aggregates
+  } yield (-!-(acck, aggk), aggregate)).toMap
 
 }
 
