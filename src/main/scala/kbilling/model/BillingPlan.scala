@@ -7,9 +7,15 @@ object BillingPlan {
 }
 
 trait BillingPlan {
+
   val accounts: Map[String, Account]
   val notifications: Set[Notification]
-  final lazy val aggregates = (accounts.values flatMap {_.aggregates}).toMap
+
+  final lazy val aggregates: Map[String, Aggregate] = (for {
+    (accKey, acc) <- accounts
+    (aggrKey, aggr) <- acc.aggregates
+  } yield (s"$accKey.$aggrKey", aggr)).toMap
+
 }
 
 trait Account {
