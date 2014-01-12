@@ -12,7 +12,7 @@ object BillingPlan {
 trait BillingPlan {
 
   val accounts: Map[String, Account]
-  val notifications: Set[Notification]
+  val notifications: Map[String, Notification]
 
   final lazy val aggregates: Map[String, Aggregate] = (for {
     (acck, account) <- accounts
@@ -34,4 +34,4 @@ case class Aggregate(
   init: Option[BigDecimal] => BigDecimal = {_ => 0}
 )
 
-case class Notification(predicate: Vars => Boolean, name: String)
+case class Notification(predicate: Vars => Boolean)
