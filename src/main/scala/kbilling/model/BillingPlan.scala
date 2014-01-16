@@ -4,9 +4,9 @@ import BillingPlan._
 
 object BillingPlan {
   type Vars = Map[String, BigDecimal]
-  @inline def !!(acck: String, aggk: String) = s"$acck.$aggk"
+  @inline def $(acck: String, aggk: String) = s"$acck.$aggk"
   val _COST = "_COST"
-  @inline def COST(acck: String) = !!(acck, _COST)
+  @inline def COST(acck: String) = $(acck, _COST)
 }
 
 trait BillingPlan {
@@ -17,7 +17,7 @@ trait BillingPlan {
   final lazy val aggregates: Map[String, Aggregate] = (for {
     (acck, account) <- accounts
     (aggk, aggregate) <- account.aggregates
-  } yield (!!(acck, aggk), aggregate)).toMap
+  } yield $(acck, aggk) -> aggregate).toMap
 
 }
 
