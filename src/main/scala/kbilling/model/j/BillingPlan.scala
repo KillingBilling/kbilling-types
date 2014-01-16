@@ -10,7 +10,7 @@ trait BillingPlan {
 }
 
 trait Account {
-  def getAggregates: JMap[String, Aggregate]
+  def aggregates: JMap[String, Aggregate]
 }
 
 trait ServiceAccount extends Account
