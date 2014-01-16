@@ -3,10 +3,13 @@ package kbilling.model
 import BillingPlan._
 
 object BillingPlan {
+
   type Vars = Map[String, BigDecimal]
-  @inline def $(acck: String, aggk: String) = s"$acck.$aggk"
   val _COST = "_COST"
+
+  @inline def $(acck: String, aggk: String) = s"$acck.$aggk"
   @inline def COST(acck: String) = $(acck, _COST)
+
 }
 
 trait BillingPlan {
@@ -21,7 +24,7 @@ trait BillingPlan {
 
 }
 
-trait Account {
+sealed trait Account {
   def aggregates: Map[String, Aggregate]
 }
 
