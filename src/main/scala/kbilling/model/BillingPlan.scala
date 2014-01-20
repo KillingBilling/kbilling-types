@@ -5,9 +5,9 @@ import BillingPlan._
 object BillingPlan {
 
   type Vars = Map[String, BigDecimal]
-  val cost = "cost"
+  val COST = "cost"
 
-  @inline def COST(acck: String) = acck $ cost
+  @inline def costAcc(acc: String) = acc $ COST
 
   implicit class AccountKey(val accKey: String) extends AnyVal {
     @inline def $(aggKey: String): String = s"$accKey.$aggKey"
