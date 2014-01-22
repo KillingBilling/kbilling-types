@@ -35,9 +35,14 @@ case class ServiceAccount(aggregates: Map[String, Aggregate]) extends Account
 
 case class PaymentAccount(cost: Vars => BigDecimal, aggregates: Map[String, Aggregate] = Map()) extends Account
 
+object Aggregate {
+  val SUM = Aggregate({_ + _}, {_ => 0})
+  val PRODUCT = Aggregate({_ * _}, {_ => 1})
+}
+
 case class Aggregate(
-  aggr: (BigDecimal, BigDecimal) => BigDecimal = {(a, b) => a + b},
-  init: Option[BigDecimal] => BigDecimal = {_ => 0}
+  aggr: (BigDecimal, BigDecimal) => BigDecimal,
+  init: Option[BigDecimal] => BigDecimal
 )
 
 case class Notification(predicate: Vars => Boolean)
