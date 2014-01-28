@@ -21,11 +21,15 @@ trait BillingPlan {
   val values: Map[String, Value]
   val notifications: Map[String, Notification]
 
-  final lazy val aggregates: Map[String, Aggregate] = (for {
+  final lazy val aggregates: Map[String, Aggregate] = for {
     (acck, account) <- accounts
     (aggk, aggregate) <- account.aggregates
-  } yield (acck $ aggk) -> aggregate).toMap
+  } yield (acck $ aggk, aggregate)
 
+}
+
+object Account {
+  def unapply(a: Account) = Some(a.aggregates)
 }
 
 sealed trait Account {
